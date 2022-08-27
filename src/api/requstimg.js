@@ -1,12 +1,14 @@
 import axios from 'axios';
 
-export async function getImg() {
+export async function getImg(searchQuery) {
   try {
     const response = await axios.get(
-      'https://pixabay.com/api/?key=29505255-484f86763b9591f191f4bfca7&q=hamster'
+      `https://pixabay.com/api/?key=29505255-484f86763b9591f191f4bfca7&q=${searchQuery}`
     );
-    console.log(response);
+    return response.data.hits;
   } catch (error) {
-    console.error(error);
+    console.error(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
   }
 }

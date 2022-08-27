@@ -1,0 +1,56 @@
+// <div class="photo-card">
+//   <img src="" alt="" loading="lazy" />
+//   <div class="info">
+//     <p class="info-item">
+//       <b>Likes</b>
+//     </p>
+//     <p class="info-item">
+//       <b>Views</b>
+//     </p>
+//     <p class="info-item">
+//       <b>Comments</b>
+//     </p>
+//     <p class="info-item">
+//       <b>Downloads</b>
+//     </p>
+//   </div>
+// </div>
+
+.gallery {
+  display: grid;
+  max-width: 1140px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  //   grid-auto-rows: 240px;
+  grid-gap: 12px;
+
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info {
+  display: flex;
+  font-size: 16px;
+}
+
+// .photo-card {
+//   width: 320px;
+
+//   padding: 10px;
+//   outline: 1px solid tomato;
+// }
+
+img {
+  display: block;
+  width: 100%;
+  height: 300px;
+
+  object-fit: cover;
+}
+
+// img {
+//   display: block;
+//   width: 100%;
+//   height: 70%;
+//   object-fit: covers;
+// }
