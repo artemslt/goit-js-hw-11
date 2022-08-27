@@ -1,0 +1,1 @@
+{"mappings":"AAIAA,QAAQC,IAAI","sources":["src/index.js"],"sourcesContent":["// import { getImg } from './api/requstimg';\n\n// getImg().then(data => console.log(data.hits));\n\nconsole.log('dsdfsdfsd');\n"],"names":["console","log"],"version":3,"file":"index.f18c18cf.js.map"}
