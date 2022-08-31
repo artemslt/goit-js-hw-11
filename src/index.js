@@ -69,7 +69,7 @@ async function loadMore() {
       );
     }
     refs.gallery.insertAdjacentHTML('beforeend', markupList(arrImg.hits));
-    simpleLightBox = new SimpleLightbox('.gallery a').refresh();
+    simpleLightBox.refresh();
     return;
   } catch (error) {
     console.log(error);
