@@ -1,5 +1,5 @@
-import { getImg } from './api/requstimg';
-import markupList from './tamplates/tamplates';
+import { getImgs } from './api/getImgs';
+import markupList from './tamplates/markupList';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -15,6 +15,7 @@ let page = 1;
 let query = '';
 let totalPages = 0;
 let simpleLightBox;
+let lastQuery = '';
 
 refs.form.addEventListener('submit', searchQuery);
 refs.loadMoreBtn.addEventListener('click', loadMore);
@@ -22,10 +23,24 @@ refs.loadMoreBtn.addEventListener('click', loadMore);
 async function searchQuery(evt) {
   evt.preventDefault();
   page = 1;
-  refs.gallery.innerHTML = '';
+
   query = evt.target.searchQuery.value.trim().toLowerCase();
+
+  if (query === '') {
+    refs.gallery.innerHTML = '';
+    refs.loadMoreBtn.classList.add('visually-hidden');
+    Notiflix.Notify.warning('Please enter search query!');
+    return;
+  }
+
+  if (lastQuery === query) {
+    Notiflix.Notify.warning('You enter the same search query');
+    return;
+  }
+
+  refs.gallery.innerHTML = '';
   refs.loadMoreBtn.classList.add('visually-hidden');
-  const arrImg = await getImg(query, page);
+  const arrImg = await getImgs(query, page);
 
   try {
     if (arrImg.totalHits === 0) {
@@ -35,17 +50,17 @@ async function searchQuery(evt) {
     } else {
       totalPages = arrImg.totalHits / 40;
       Notiflix.Notify.info(`Hooray! We found ${arrImg.totalHits} images.`);
-
+      lastQuery = query;
       if (arrImg.totalHits > 40) {
         refs.loadMoreBtn.classList.remove('visually-hidden');
       }
 
       refs.gallery.insertAdjacentHTML('beforeend', markupList(arrImg.hits));
-      simpleLightBox = new SimpleLightbox('.gallery a').refresh();
+      simpleLightBox = new SimpleLightbox('.gallery a');
       return;
     }
   } catch (error) {
-    console.log(error);
+    Notiflix.Notify.error(error);
   }
 }
 
@@ -59,7 +74,7 @@ async function loadMore() {
     behavior: 'smooth',
   });
 
-  const arrImg = await getImg(query, page);
+  const arrImg = await getImgs(query, page);
 
   try {
     if (page > totalPages) {
