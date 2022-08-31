@@ -51,6 +51,7 @@ async function searchQuery(evt) {
       totalPages = arrImg.totalHits / 40;
       Notiflix.Notify.info(`Hooray! We found ${arrImg.totalHits} images.`);
       lastQuery = query;
+
       if (arrImg.totalHits > 40) {
         refs.loadMoreBtn.classList.remove('visually-hidden');
       }
@@ -66,14 +67,7 @@ async function searchQuery(evt) {
 
 async function loadMore() {
   page += 1;
-  const { height: cardHeight } =
-    refs.gallery.firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-
+  scroll();
   const arrImg = await getImgs(query, page);
 
   try {
@@ -89,6 +83,16 @@ async function loadMore() {
   } catch (error) {
     console.log(error);
   }
+}
+
+function scroll() {
+  const { height: cardHeight } =
+    refs.gallery.firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
 
 // Загрузка по скролу
